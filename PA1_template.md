@@ -1,7 +1,7 @@
 # Reproducible Research: Peer Assessment 1
 
 
-## Loading and preprocessing the data
+## 1. Loading and preprocessing the data - Code for reading in the dataset and/or processing the data
 
 ```r
 data <- read.csv("activity.csv", header = T, sep = ",")
@@ -14,12 +14,14 @@ data <- read.csv("activity.csv", header = T, sep = ",")
 ```r
 sum_of_steps <- tapply(data$steps, data$date, sum, na.rm=T)
 ```
+## 2. Histogram of the total number of steps taken each day
 
 ```r
 hist(sum_of_steps,breaks = 10, col=5,xlab = "sum of steps per day", main = "histogram of steps per day")
 ```
 
 ![](PA1_template_files/figure-html/Plot sum of steps per day-1.png)<!-- -->
+##3.Mean and median number of steps taken each day 
 
 ```r
 mean_sum_of_steps <- mean(sum_of_steps)
@@ -43,12 +45,14 @@ print(c("mean of the total number of steps taken per daymean is:",mean_sum_of_st
 ```r
 min_int <- tapply(data$steps, data$interval, mean, na.rm=T)
 ```
+##4.Time series plot of the average number of steps taken
 
 ```r
 plot(min_int ~ unique(data$interval), col=2,type="l", xlab = "5 mins interval",ylab="Average no of steps")
 ```
 
 ![](PA1_template_files/figure-html/Plot Interval Vs Average no of steps-1.png)<!-- -->
+##5. The 5-minute interval that, on average, contains the maximum number of steps
 
 ```r
 max_no_of_steps_int<-min_int[which.max(min_int)]
@@ -66,6 +70,7 @@ print(c("5 minute interval with max no of steps: ","No of steps:",max_no_of_step
 ##                                        835 
 ##                         "206.169811320755"
 ```
+##6. Code to describe and show a strategy for imputing missing data
 
 ```r
 step_missing_values<-sum(is.na(data$steps))
@@ -99,6 +104,7 @@ for (i in 1:nrow(data)){
 ```r
 sum_of_steps1 <- tapply(data1$steps, data1$date, sum, na.rm=T)
 ```
+##7. Histogram of the total number of steps taken each day after missing values are imputed
 
 ```r
 hist(sum_of_steps1,breaks = 10, col=5,xlab = "sum of steps per day", main = "histogram of steps per day")
@@ -164,6 +170,7 @@ week_data <- rbind(steps_per_interval_weekends, steps_per_interval_weekdays)
 #Converting the day variabke to a factor
 week_data$day <- as.factor(week_data$day)
 ```
+##8.Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends
 
 ```r
 library(lattice)
